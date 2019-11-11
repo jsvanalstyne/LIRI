@@ -1,5 +1,6 @@
 // require("dotenv").config();
 // var keys = require("./keys.js");
+var fs = require("fs");
 var axios = require("axios");
 var Spotify = require('node-spotify-api')
 var moment = require("moment")
@@ -21,23 +22,20 @@ switch(userSelection){
           return console.log('Error occurred: ' + err);
         }
        
-      // console.log(data);
-      // console.log(data.tracks.href)
-      // console.log(JSON.stringify(data.tracks.items[1]))
       // Song name
       console.log(JSON.stringify(data.tracks.items[1].name));
         // song link
       console.log(JSON.stringify(data.tracks.items[1].href));
       // Artist name
       console.log(JSON.stringify(data.tracks.items[1].artists[0].name));
-      // // album name
+      // album name
       console.log(JSON.stringify(data.tracks.items[1].album.name));
       });
 
     break;
     case "concert-this": 
     console.log("got a concert")
-    var concertApi= "https://rest.bandsintown.com/artists/taylor+swift/events?app_id=codingbootcamp";
+    var concertApi= "https://rest.bandsintown.com/artists/"+userInput+"/events?app_id=codingbootcamp";
     axios.get(concertApi).then(
       function(response) {
         console.log( JSON.stringify(response.data[0].venue.name));
@@ -63,5 +61,6 @@ switch(userSelection){
         });
         break;
     case "do-what-it-says": 
+    
     break;
 }
