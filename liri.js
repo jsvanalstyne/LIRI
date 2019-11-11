@@ -2,6 +2,7 @@
 // var keys = require("./keys.js");
 var axios = require("axios");
 var Spotify = require('node-spotify-api')
+var moment = require("moment")
 // var spotify = new Spotify(keys.spotify);
 var userInput = process.argv[3];
 var userSelection= process.argv[2];
@@ -34,7 +35,15 @@ switch(userSelection){
       });
 
     break;
-    case "concert-this": ;
+    case "concert-this": 
+    console.log("got a concert")
+    var concertApi= "https://rest.bandsintown.com/artists/taylor+swift/events?app_id=codingbootcamp";
+    axios.get(concertApi).then(
+      function(response) {
+        console.log( JSON.stringify(response.data[0].venue.name));
+        console.log( JSON.stringify(response.data[0].venue.city));
+        console.log( moment(response.data[0].datetime).format('L'));
+      });
     break;
     case "movie-this":
     var queryUrl = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
