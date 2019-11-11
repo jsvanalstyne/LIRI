@@ -35,13 +35,18 @@ inquirer.prompt([
           return console.log("Your search did not return any results. Might I interest you in \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")        }
         // console.log(JSON.stringify(data.tracks.items))
         // Song name
-        console.log(JSON.stringify(data.tracks.items[1].name));
+      for(var i=0; i<data.tracks.items.length; i++){
+        console.log("-------------------------------");
+        // song name
+        console.log(JSON.stringify("Song name: "+data.tracks.items[i].name));
         // song link
-        console.log(JSON.stringify(data.tracks.items[1].external_urls.spotify));
+        console.log(JSON.stringify("Song link: "+data.tracks.items[i].external_urls.spotify));
         // Artist name
-        console.log(JSON.stringify(data.tracks.items[1].artists[0].name));
+        console.log(JSON.stringify("Artist: " +data.tracks.items[i].artists[0].name));
         // album name
-        console.log(JSON.stringify(data.tracks.items[1].album.name));
+        console.log(JSON.stringify("Album Name: "+data.tracks.items[i].album.name));
+        console.log("-------------------------------");
+      }
       });
 
       break;
