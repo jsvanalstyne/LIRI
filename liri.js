@@ -6,8 +6,6 @@ var Spotify = require('node-spotify-api');
 var moment = require("moment");
 var inquirer = require("inquirer");
 var spotify = new Spotify(keys.spotify);
-// var userInput = process.argv[3];
-// var userSelection= process.argv[2];
 inquirer.prompt([
   {
     type: "checkbox",
@@ -21,13 +19,13 @@ inquirer.prompt([
     name: "response"
 
   }
-]).then(function (user) {
-  console.log(user.question);
-  console.log(user.response);
+]).then(function liriSwitch(user) {
+  // console.log("line 23"+user)
+  // console.log("line 24" + user.question);
+  // console.log(user.response);
   switch (user.question.toString()) {
-    // console.log("did you enter the switch");
     case 'spotify-this-song':
-      console.log("did you go in here?")
+      // console.log("did you go in here?")
       spotify.search({ type: 'track', query: user.response }, function (err, data) {
         console.log("working")
        console.log(!data);
@@ -56,12 +54,15 @@ inquirer.prompt([
       var concertApi = "https://rest.bandsintown.com/artists/" + user.response + "/events?app_id=codingbootcamp";
       axios.get(concertApi).then(
         function (response) {
+          if(response.data.length===0){
+            console.log("No events found.")
+          }else{
           for(var i=0; i<response.data.length; i++){
             console.log("-------------------------------")
           console.log(JSON.stringify("Venue: "+response.data[i].venue.name));
           console.log(JSON.stringify("City: "+response.data[i].venue.city));
           console.log("Date: " +moment(response.data[i].datetime).format('L'));
-        }}
+        }}}
         );
       break;
     case "movie-this":
@@ -82,7 +83,21 @@ inquirer.prompt([
         });
       break;
     case "do-what-it-says":
+        fs.readFile("random.txt", "utf8", function(error, data) {
+          
+        console.log(data);
+        
+        var doWhatitSays = data.split(",");
+        console.log(doWhatitSays);
+        // liriSwitch(doWhatitSays[1])
+          // console.log(doWhatitSays[1]);
+          var switchItem = doWhatitSays[0];
+          var songMovieConcert= doWhatitSays[1];
+          console.log(switchItem);
+          liriSwitch(switchItem);
 
+         
+          })
       break;
     default:
     console.log("Please select a viable option");
