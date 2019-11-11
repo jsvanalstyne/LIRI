@@ -23,7 +23,7 @@ inquirer.prompt([
 ]).then(function (userSelection) {
   switch (userSelection.question) {
     case "spotify-this-song":
-      console.log("you in girl")
+      // console.log("you in girl")
 
       var spotify = new Spotify({
         id: "fc93bddab75c455ea6c7e1091090fa8f",
@@ -31,10 +31,12 @@ inquirer.prompt([
       });
 
       spotify.search({ type: 'track', query: userSelection.response }, function (err, data) {
+        console.log("working")
         if (err) {
-          return console.log("Your search did not return any results. Might I interest you in \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")        }
+          console.log("Your search did not return any results. Might I interest you in \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")        }
         // console.log(JSON.stringify(data.tracks.items))
         // Song name
+        else{
       for(var i=0; i<data.tracks.items.length; i++){
         console.log("-------------------------------");
         // song name
@@ -46,7 +48,7 @@ inquirer.prompt([
         // album name
         console.log(JSON.stringify("Album Name: "+data.tracks.items[i].album.name));
         console.log("-------------------------------");
-      }
+      }}
       });
 
       break;
@@ -55,10 +57,13 @@ inquirer.prompt([
       var concertApi = "https://rest.bandsintown.com/artists/" + userSelection.response + "/events?app_id=codingbootcamp";
       axios.get(concertApi).then(
         function (response) {
-          console.log(JSON.stringify(response.data[0].venue.name));
-          console.log(JSON.stringify(response.data[0].venue.city));
-          console.log(moment(response.data[0].datetime).format('L'));
-        });
+          for(var i=0; i<response.data.length; i++){
+            console.log("-------------------------------")
+          console.log(JSON.stringify("Venue: "+response.data[i].venue.name));
+          console.log(JSON.stringify("City: "+response.data[i].venue.city));
+          console.log("Date: " +moment(response.data[i].datetime).format('L'));
+        }}
+        );
       break;
     case "movie-this":
       var queryUrl = "http://www.omdbapi.com/?t=" + userSelection.response + "&y=&plot=short&apikey=trilogy";
