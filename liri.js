@@ -6,7 +6,7 @@ var Spotify = require('node-spotify-api');
 var moment = require("moment");
 var inquirer = require("inquirer");
 // var spotify = new Spotify(keys.spotify);
-var userInput = process.argv[3];
+// var userInput = process.argv[3];
 // var userSelection= process.argv[2];
 inquirer.prompt([
   {
@@ -32,13 +32,12 @@ inquirer.prompt([
 
       spotify.search({ type: 'track', query: userSelection.response }, function (err, data) {
         if (err) {
-          return console.log('Error occurred: ' + err);
-        }
-
+          return console.log("Your search did not return any results. Might I interest you in \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")        }
+        // console.log(JSON.stringify(data.tracks.items))
         // Song name
         console.log(JSON.stringify(data.tracks.items[1].name));
         // song link
-        console.log(JSON.stringify(data.tracks.items[1].href));
+        console.log(JSON.stringify(data.tracks.items[1].external_urls.spotify));
         // Artist name
         console.log(JSON.stringify(data.tracks.items[1].artists[0].name));
         // album name
