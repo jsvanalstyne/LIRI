@@ -1,42 +1,41 @@
-// require("dotenv").config();
-// var keys = require("./keys.js");
+require("dotenv").config({path:'.env'});
+var keys = require("./keys.js");
 var fs = require("fs");
 var axios = require("axios");
 var Spotify = require('node-spotify-api');
 var moment = require("moment");
 var inquirer = require("inquirer");
-// var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 // var userInput = process.argv[3];
 // var userSelection= process.argv[2];
 inquirer.prompt([
   {
-    type: "input",
-    message: "what would you like to do?",
-    name: "question"
+    type: "checkbox",
+    name: "question",
+    message: "What would you like to do??",
+    choices: ["spotify-this-song", "concert-this", "movie-this", "do-what-it-says"]
   },
   {
     type: "input",
-    message: "what band, song or movie would you like to search?",
+    message: "what would you like to search?",
     name: "response"
 
   }
-]).then(function (userSelection) {
-  switch (userSelection.question) {
-    case "spotify-this-song":
-      // console.log("you in girl")
-
-      var spotify = new Spotify({
-        id: "fc93bddab75c455ea6c7e1091090fa8f",
-        secret: "f408908194134ea2b4219785e63cbb28"
-      });
-
-      spotify.search({ type: 'track', query: userSelection.response }, function (err, data) {
+]).then(function (user) {
+  console.log(user.question);
+  console.log(user.response);
+  switch (user.question.toString()) {
+    // console.log("did you enter the switch");
+    case 'spotify-this-song':
+      console.log("did you go in here?")
+      spotify.search({ type: 'track', query: user.response }, function (err, data) {
         console.log("working")
-        if (err) {
-          console.log("Your search did not return any results. Might I interest you in \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")        }
-        // console.log(JSON.stringify(data.tracks.items))
+       console.log(!data);
+        if (!data===false) {
+          console.log("Your search did not return any results. Might I interest you in: \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")        }
+        
         // Song name
-        else{
+        
       for(var i=0; i<data.tracks.items.length; i++){
         console.log("-------------------------------");
         // song name
@@ -48,13 +47,13 @@ inquirer.prompt([
         // album name
         console.log(JSON.stringify("Album Name: "+data.tracks.items[i].album.name));
         console.log("-------------------------------");
-      }}
+      }
       });
 
       break;
     case "concert-this":
       console.log("got a concert")
-      var concertApi = "https://rest.bandsintown.com/artists/" + userSelection.response + "/events?app_id=codingbootcamp";
+      var concertApi = "https://rest.bandsintown.com/artists/" + user.response + "/events?app_id=codingbootcamp";
       axios.get(concertApi).then(
         function (response) {
           for(var i=0; i<response.data.length; i++){
@@ -66,7 +65,7 @@ inquirer.prompt([
         );
       break;
     case "movie-this":
-      var queryUrl = "http://www.omdbapi.com/?t=" + userSelection.response + "&y=&plot=short&apikey=trilogy";
+      var queryUrl = "http://www.omdbapi.com/?t=" + user.response + "&y=&plot=short&apikey=trilogy";
       axios.get(queryUrl).then(
         function (response) {
           //   console.log("Release Year: " + response.data.Year);
