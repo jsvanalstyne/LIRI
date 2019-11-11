@@ -75,5 +75,7 @@ inquirer.prompt([
     case "do-what-it-says":
 
       break;
+    default:
+    console.log("Please select a viable option");
   }
 })
