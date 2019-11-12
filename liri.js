@@ -55,22 +55,24 @@ function concertThis(userBand) {
 }
 function movieThis(movieTitle) {
   var queryUrl = "http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&apikey=trilogy";
+  console.log("inside movie function "+ movieTitle);
   axios.get(queryUrl).then(
-    function (response) {
+    function (result) {
 
 
-      if ((response.data.Response) === "False") {
+      if ((result.data.Response) === "False") {
         console.log("Movie not found");
       } else {
+        console.log("unfiltered JSON " + result.data)
 
-        console.log("Movie Title: " + response.data.Title);
-        console.log("Year Released: " + response.data.Year);
-        console.log("imdbRating: " + response.data.imdbRating);
-        console.log("Rotten Tomatoes Rating: " + JSON.stringify(response.data.Ratings[1].Value));
-        console.log("Produced in which country: " + response.data.Country);
-        console.log("Movie Language: " + response.data.Language);
-        console.log("Movie Plot: " + response.data.Plot);
-        console.log("Actors in movie: " + response.data.Actors);
+        console.log("Movie Title: " + result.data.Title);
+        console.log("Year Released: " + result.data.Year);
+        console.log("imdbRating: " + result.data.imdbRating);
+        console.log("Rotten Tomatoes Rating: " + JSON.stringify(result.data.Ratings[1].Value));
+        console.log("Produced in which country: " + result.data.Country);
+        console.log("Movie Language: " + result.data.Language);
+        console.log("Movie Plot: " + result.data.Plot);
+        console.log("Actors in movie: " + result.data.Actors);
 
       }
     });
@@ -119,7 +121,9 @@ inquirer.prompt([
         var doWhatitSays = data.split(",");
         console.log(doWhatitSays);
         var switchItem = doWhatitSays[0];
-        var songMovieConcert = doWhatitSays[1];
+        console.log(doWhatitSays[0]);
+        console.log(doWhatitSays[1]);
+        var songMovieConcert = doWhatitSays[1].trim();
         console.log("before switch" +songMovieConcert);
         switch (switchItem) {
           case 'spotify-this-song':
@@ -132,7 +136,7 @@ inquirer.prompt([
             concertThis(songMovieConcert);
             break;
           case "movie-this":
-
+          console.log("inside switch "+ songMovieConcert);
             movieThis(songMovieConcert);
             break;
         }
