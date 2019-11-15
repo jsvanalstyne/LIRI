@@ -52,3 +52,5 @@ LIRI is a command line node app that takes in user parameters and returns import
 - [OMDB API](http://omdbapi.com/)
 - [BandsInTown API](https://artists.bandsintown.com/support/bandsintown-api)
 - [Spotify API](https://developer.spotify.com/documentation/web-api/)
+## Author
+Jerrica VanAlstyne
