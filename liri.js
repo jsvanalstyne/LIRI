@@ -101,8 +101,11 @@ inquirer.prompt([
   // console.log(user.response);
   switch (user.question.toString()) {
     case 'spotify-this-song':
+    if(user.response ===""){
+      console.log("Your search did not return any results. Might I interest you in: \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")
+    }else{
 
-      spotifyThis(user.response)
+      spotifyThis(user.response)}
       break;
     case "concert-this":
 
@@ -110,7 +113,10 @@ inquirer.prompt([
       concertThis(user.response);
       break;
     case "movie-this":
+    if(user.response===""){
+            movieThis("Mr.Nobody");
 
+    }else{}
       movieThis(user.response);
       break;
     case "do-what-it-says":
@@ -136,7 +142,8 @@ inquirer.prompt([
             concertThis(songMovieConcert);
             break;
           case "movie-this":
-          console.log("inside switch "+ songMovieConcert);
+          // console.log("inside switch "+ songMovieConcert);
+          
             movieThis(songMovieConcert);
             break;
         }
