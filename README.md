@@ -21,6 +21,26 @@ LIRI is a command line node app that takes in user parameters and returns import
 6. Then enter your query after "what would you like to search?"
 7. Response information will be displayed inside the terminal. 
 
+## Command Responses
+  - 'spotify-this-song command will respond with
+    - Artist
+    - Song Title
+    - Album
+    - Link to song
+ - 'movie-this' command will respond with
+    - Movie title
+    - Movie release year
+    - IMDB rating
+    - Rotten tomatoes rating
+    - Country where the movie was produced
+    - Summary of movie
+    - Actors/Actresses
+ - 'concert-this' command will respond with:
+    - Venue name
+    - Venue location
+    - Event data
+ - 'do-what-it-says' command will perform the command in the 'random.txt' file and search for the movie/song/artist listed. 
+
 
 ## Link to Demo
 
