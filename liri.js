@@ -9,14 +9,13 @@ var spotify = new Spotify(keys.spotify);
 
 function spotifyThis(userSong) {
   spotify.search({ type: 'track', query: userSong }, function (err, data) {
-    console.log("working")
-    console.log(!data);
-    if (!data === false) {
+    
+    if (data.tracks.items.length<-1) {
       console.log("Your search did not return any results. Might I interest you in: \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")
     }
 
     // Song name
-
+    else{
     for (var i = 0; i < data.tracks.items.length; i++) {
       console.log("-------------------------------");
       // song name
@@ -28,7 +27,7 @@ function spotifyThis(userSong) {
       // album name
       console.log(JSON.stringify("Album Name: " + data.tracks.items[i].album.name));
       console.log("-------------------------------");
-    }
+    }}
   });
 }
 
@@ -60,10 +59,6 @@ function movieThis(movieTitle) {
     function (result) {
 
 
-      if ((result.data.Response) === "False") {
-        console.log("Movie not found");
-      } else {
-        console.log("unfiltered JSON " + result.data)
 
         console.log("Movie Title: " + result.data.Title);
         console.log("Year Released: " + result.data.Year);
@@ -74,7 +69,7 @@ function movieThis(movieTitle) {
         console.log("Movie Plot: " + result.data.Plot);
         console.log("Actors in movie: " + result.data.Actors);
 
-      }
+      
     });
 
 }
@@ -96,16 +91,12 @@ inquirer.prompt([
 
   }
 ]).then(function (user) {
-  // console.log("line 23"+user)
-  // console.log("line 24" + user.question);
-  // console.log(user.response);
+  
   switch (user.question.toString()) {
     case 'spotify-this-song':
-    if(user.response ===""){
-      console.log("Your search did not return any results. Might I interest you in: \n'The Sign' \nby 'Ace of Base' \nfrom 'The Sign' album. \nHere is a link: https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB")
-    }else{
-
-      spotifyThis(user.response)}
+    
+   
+      spotifyThis(user.response)
       break;
     case "concert-this":
 
@@ -125,12 +116,11 @@ inquirer.prompt([
         console.log(data);
 
         var doWhatitSays = data.split(",");
-        console.log(doWhatitSays);
+        
         var switchItem = doWhatitSays[0];
-        console.log(doWhatitSays[0]);
-        console.log(doWhatitSays[1]);
+        
         var songMovieConcert = doWhatitSays[1].trim();
-        console.log("before switch" +songMovieConcert);
+        
         switch (switchItem) {
           case 'spotify-this-song':
 
@@ -142,7 +132,7 @@ inquirer.prompt([
             concertThis(songMovieConcert);
             break;
           case "movie-this":
-          // console.log("inside switch "+ songMovieConcert);
+          
           
             movieThis(songMovieConcert);
             break;
